@@ -8,6 +8,24 @@ import { Component } from '@angular/core';
 export class AppComponent {
   navBarOpen = true;
 
+  routes = [
+    {
+      route: '/',
+      title: 'Home',
+      icon: 'home'
+    },
+    {
+      route: '/albums',
+      title: 'Albums',
+      icon: 'folder'
+    },
+    {
+      route: '/users',
+      title: 'Users',
+      icon: 'event'
+    }
+  ];
+
   toggleNav() {
     this.navBarOpen = !this.navBarOpen;
   }
