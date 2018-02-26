@@ -1,6 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-sidenav-container fxFlexFill>
-  <mat-sidenav mode="side"
+<mat-sidenav-container fxFlexFill
+                       (backdropClick)="toggleNav()">
+  <mat-sidenav [mode]= mode
                [opened]="navBarOpen">
     <mat-nav-list>
       <a *ngFor="let route of routes"

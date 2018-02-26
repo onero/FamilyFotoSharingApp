@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class AppComponent implements OnDestroy{
 
   navBarOpen = true;
+  mode = 'side';
 
   routes = [
     {
@@ -45,13 +46,13 @@ export class AppComponent implements OnDestroy{
   }
 
   loadMobileContent() {
-    console.log('Small view');
     this.navBarOpen = false;
+    this.mode = 'over';
   }
 
   loadDashBoardContent() {
-    console.log('Large view');
     this.navBarOpen = true;
+    this.mode = 'side';
   }
 
   toggleNav() {
