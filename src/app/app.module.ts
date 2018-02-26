@@ -1,15 +1,16 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatIconModule, MatListModule, MatSidenavModule} from '@angular/material';
-import { AppRoutingModule } from './app-routing.module';
-import { AlbumsModule } from './albums/albums.module';
+import {MatButtonModule, MatListModule, MatSidenavModule} from '@angular/material';
+import {AppRoutingModule} from './app-routing.module';
+import {AlbumsModule} from './albums/albums.module';
 import {SharedModule} from './shared/shared.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
-
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../environments/environment';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatSidenavModule,
     SharedModule,
     MatListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

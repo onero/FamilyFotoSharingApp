@@ -24,9 +24,9 @@ export class AppComponent implements OnDestroy{
       icon: 'folder'
     },
     {
-      route: '/users',
-      title: 'Users',
-      icon: 'event'
+      route: '/login',
+      title: 'Login',
+      icon: 'input'
     }
   ];
   watcher: Subscription;
