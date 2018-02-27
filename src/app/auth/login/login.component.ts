@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {AngularFireAuth} from 'angularfire2/auth';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,11 +8,18 @@ import {AngularFireAuth} from 'angularfire2/auth';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fireAuth: AngularFireAuth) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    // this.fireAuth.auth.createUserWithEmailAndPassword('test@test.dk', '123456')
-    //   .then(user => console.log(user));
+    this.authService.login('adamlars90@gmail.com', '123456')
+      .then(() => {
+        console.log('Logged in');
+      })
+      .catch(error => console.log(error.message));
+
+    this.authService.isAuthenticated()
+      .subscribe(authState => console.log(authState),
+                   error2 => console.log(error2));
   }
 
 }
