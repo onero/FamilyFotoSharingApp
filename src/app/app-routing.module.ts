@@ -4,11 +4,18 @@ import {RouterModule, Routes} from '@angular/router';
 import {AlbumsListComponent} from './albums/albums-list/albums-list.component';
 import {AuthModule} from './auth/auth.module';
 import {LoginComponent} from './auth/login/login.component';
+import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'albums',
+    pathMatch: 'full'
+  },
+  {
     path: 'albums',
-    component: AlbumsListComponent
+    component: AlbumsListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',

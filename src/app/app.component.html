@@ -15,11 +15,13 @@
   </mat-sidenav>
   <mat-sidenav-content fxLayout="column">
     <app-toolbar (navToggle)="toggleNav()"></app-toolbar>
-    <div fxFlex>
+    <div ½>
       <router-outlet></router-outlet>
     </div>
     <footer fxLayout="column">
-      <hr fxFlexFill>
+    <div fxLayout="row">
+      <hr fxFlex="100">
+    </div>
       <p fxFlexAlign="center">Copyright 2018 Adamino</p>
     </footer>
   </mat-sidenav-content>

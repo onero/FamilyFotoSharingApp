@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../auth.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +11,44 @@ import {AuthService} from '../auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  loginForm: FormGroup;
+
+  constructor(private authService: AuthService,
+              private fb: FormBuilder,
+              private snack: MatSnackBar,
+              private router: Router) {
+    this.loginForm = fb.group({
+      email: '',
+      password: ''
+    });
+  }
 
   ngOnInit() {
-    this.authService.login('adamlars90@gmail.com', '123456')
-      .then(() => {
-        console.log('Logged in');
-      })
-      .catch(error => console.log(error.message));
-
     this.authService.isAuthenticated()
       .subscribe(authState => console.log(authState),
                    error2 => console.log(error2));
+  }
+
+  login() {
+    const loginModel = this.loginForm.value;
+    this.authService.login(loginModel.email, loginModel.password)
+      .then(() => {
+        this.router.navigateByUrl('albums')
+          .then(() => {
+            this.snack.open('Congratulations, you are logged in!',
+              '',
+              {
+                duration: 2000
+              });
+          });
+      })
+      .catch(error => {
+        this.snack.open(error.message,
+          '',
+          {
+            duration: 5000
+          });
+      });
   }
 
 }
