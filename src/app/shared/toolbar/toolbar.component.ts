@@ -1,5 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AuthService} from '../../auth/auth.service';
+import {AuthService} from '../../auth/shared/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,16 +10,15 @@ import {AuthService} from '../../auth/auth.service';
 export class ToolbarComponent implements OnInit {
 
   isLoggedIn: boolean;
-
   @Output()
   navToggle = new EventEmitter();
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     this.authService.isAuthenticated()
-      .subscribe(userLoggedIn => {
-        this.isLoggedIn = userLoggedIn;
+      .subscribe(isLogged => {
+        this.isLoggedIn = isLogged;
       });
   }
 
@@ -27,7 +27,9 @@ export class ToolbarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout()
+      .then(() => {
+        this.router.navigateByUrl('login');
+      });
   }
-
 }

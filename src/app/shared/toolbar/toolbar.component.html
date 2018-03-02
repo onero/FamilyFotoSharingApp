@@ -6,10 +6,11 @@
             *ngIf="isLoggedIn">
       <mat-icon>list</mat-icon>
     </button>
-    <span fxFlexOffset="10px" fxFlex>Family Photo Sharing App</span>
-    <button *ngIf="isLoggedIn" mat-mini-fab
+    <span fxFlex fxFlexOffset="10px">Family Photo Sharing App</span>
+    <button mat-mini-fab
             color="primary"
-            (click)="logout()">
+            (click)="logout()"
+            *ngIf="isLoggedIn">
       <mat-icon>exit_to_app</mat-icon>
     </button>
   </mat-toolbar-row>

@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import { LoginComponent } from './login/login.component';
-import { AuthService } from './auth.service';
+import {LoginComponent} from './login/login.component';
+import {AuthService} from './shared/auth.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatSnackBarModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {AuthGuard} from './auth.guard';
+import {AuthGuard} from './shared/auth.guard';
+import {SignupComponent} from './signup/signup.component';
+import {LoggedInGuard} from './shared/logged-in.guard';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -18,9 +21,10 @@ import {AuthGuard} from './auth.guard';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    RouterModule
   ],
-  declarations: [LoginComponent],
-  providers: [AuthService, AuthGuard]
+  declarations: [LoginComponent, SignupComponent],
+  providers: [AuthService, AuthGuard, LoggedInGuard]
 })
 export class AuthModule { }

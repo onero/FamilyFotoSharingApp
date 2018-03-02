@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {Subscription} from 'rxjs/Subscription';
-import {AuthService} from './auth/auth.service';
+import {AuthService} from './auth/shared/auth.service';
 
 @Component({
   selector: 'app-root',

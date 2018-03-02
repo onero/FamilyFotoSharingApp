@@ -1,28 +1,22 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<mat-sidenav-container fxFlexFill
-                       (backdropClick)="toggleNav()">
-  <mat-sidenav [mode]= mode
+<mat-sidenav-container fxFlexFill (backdropClick)="toggleNav()">
+  <mat-sidenav [mode]="mode"
                [opened]="navBarOpen">
     <mat-nav-list>
-      <a *ngFor="let route of routes"
-         mat-list-item
-         [routerLink]="route.route">
-        <app-margin-icon
-          [iconName]="route.icon">
-        </app-margin-icon> {{ route.title }}
+      <a *ngFor="let route of routes" mat-list-item [routerLink]="route.route">
+        <app-margin-icon [iconName]="route.icon"></app-margin-icon> {{route.title}}
       </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content fxLayout="column">
     <app-toolbar (navToggle)="toggleNav()"></app-toolbar>
-    <div ½>
+    <div fxFlex>
       <router-outlet></router-outlet>
     </div>
     <footer fxLayout="column">
-    <div fxLayout="row">
-      <hr fxFlex="100">
-    </div>
-      <p fxFlexAlign="center">Copyright 2018 Adamino</p>
+      <div fxLayout="row">
+        <hr fxFlex="100">
+      </div>
+      <p fxFlexAlign="center">Copyright © 2018 Business Academy South West</p>
     </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
