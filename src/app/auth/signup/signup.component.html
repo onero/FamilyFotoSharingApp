@@ -13,10 +13,10 @@
           <input matInput
                  placeholder="E-mail"
                  formControlName="email">
-          <mat-error *ngIf="fcErr('email', 'required')">
+          <mat-error *ngIf="formControlHasError('email', 'required')">
             email required
           </mat-error>
-          <mat-error *ngIf="fcErr('email', 'email', ['required'])">
+          <mat-error *ngIf="formControlHasError('email', 'email', ['required'])">
             email is invalid
           </mat-error>
         </mat-form-field>
@@ -25,10 +25,10 @@
                  placeholder="Password"
                  type="password"
                  formControlName="password">
-          <mat-error *ngIf="fcErr('password', 'required')">
+          <mat-error *ngIf="formControlHasError('password', 'required')">
             Password is required
           </mat-error>
-          <mat-error *ngIf="fcErr('password', 'minlength', ['required'])">
+          <mat-error *ngIf="formControlHasError('password', 'minlength', ['required'])">
             Password needs to be at least 6 characters
           </mat-error>
         </mat-form-field>
@@ -37,10 +37,10 @@
                  placeholder="Repeat Password"
                  type="password"
                  formControlName="repeatPassword">
-          <mat-error *ngIf="fcErr('repeatPassword', 'required')">
+          <mat-error *ngIf="formControlHasError('repeatPassword', 'required')">
             Repeat Password is required
           </mat-error>
-          <mat-error *ngIf="fcErr('repeatPassword', 'no-match', ['required'])">
+          <mat-error *ngIf="formControlHasError('repeatPassword', 'no-match', ['required'])">
             Repeat Password does not match password
           </mat-error>
         </mat-form-field>

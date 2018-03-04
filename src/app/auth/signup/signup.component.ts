@@ -47,15 +47,15 @@ export class SignupComponent implements OnInit {
       });
   }
 
-  fcErr(fc: string, ec: string, pre: string[]): boolean {
-    if (pre && pre.length > 0) {
-      for (let i = 0; i < pre.length; i++) {
-        if (this.signupForm.get(fc).hasError(pre[i])) {
+  formControlHasError(formControl: string, error: string, preRequest?: string[]): boolean {
+    if (preRequest && preRequest.length > 0) {
+      for (let i = 0; i < preRequest.length; i++) {
+        if (this.signupForm.get(formControl).hasError(preRequest[i])) {
           return false;
         }
       }
     }
-    return this.signupForm.get(fc).hasError(ec);
+    return this.signupForm.get(formControl).hasError(error);
   }
 
 }

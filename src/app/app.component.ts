@@ -8,7 +8,7 @@ import {AuthService} from './auth/shared/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
 
   navBarOpen = false;
   mode = 'side';
@@ -25,9 +25,9 @@ export class AppComponent implements OnInit, OnDestroy{
       icon: 'folder'
     },
     {
-      route: '/login',
-      title: 'Login',
-      icon: 'input'
+      route: '/profile',
+      title: 'Profile',
+      icon: 'face'
     }
   ];
   watcher: Subscription;
@@ -46,8 +46,8 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.authService.isAuthenticated()
       .subscribe(userLoggedIn => {
-      this.navBarOpen = userLoggedIn;
-    });
+        this.navBarOpen = userLoggedIn;
+      });
   }
 
   ngOnDestroy(): void {
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   loadDashBoardContent() {
-    this.navBarOpen = true;
+    this.navBarOpen = false;
     this.mode = 'side';
   }
 
