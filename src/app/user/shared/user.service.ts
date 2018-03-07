@@ -19,7 +19,6 @@ export class UserService {
       .switchMap(authUser => {
         // Get the DBUser
         return this.afs.doc<User>('users/' + authUser.uid).valueChanges()
-          .first()
           .map(dbUser => {
             // Merge information from AuthUser+DBUser
             dbUser.uid = authUser.uid;
