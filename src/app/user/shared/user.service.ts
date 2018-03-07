@@ -3,6 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
 import {AuthService} from '../../auth/shared/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
+import 'rxjs/add/operator/first';
 
 @Injectable()
 export class UserService {
@@ -14,9 +15,11 @@ export class UserService {
   getUser(): Observable<User> {
     // Get the AuthUser
     return this.authService.getAuthUser()
+      .first()
       .switchMap(authUser => {
         // Get the DBUser
         return this.afs.doc<User>('users/' + authUser.uid).valueChanges()
+          .first()
           .map(dbUser => {
             // Merge information from AuthUser+DBUser
             dbUser.uid = authUser.uid;
