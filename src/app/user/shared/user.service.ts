@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {User} from './user.model';
 import {AuthService} from '../../auth/shared/auth.service';
@@ -8,10 +8,22 @@ import {AngularFirestore} from 'angularfire2/firestore';
 export class UserService {
 
   constructor(private authService: AuthService,
-              private afs: AngularFirestore) { }
+              private afs: AngularFirestore) {
+  }
 
   getUser(): Observable<User> {
-    return this.authService.getAuthUser();
+    // Get the AuthUser
+    return this.authService.getAuthUser()
+      .switchMap(authUser => {
+        // Get the DBUser
+        return this.afs.doc<User>('users/' + authUser.uid).valueChanges()
+          .map(dbUser => {
+            // Merge information from AuthUser+DBUser
+            dbUser.uid = authUser.uid;
+            dbUser.email = authUser.email;
+            return dbUser;
+          });
+      });
   }
 
   updateUser(user: User): Promise<any> {
