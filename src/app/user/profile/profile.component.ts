@@ -57,5 +57,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.profileForm.get(fc).hasError(ec);
   }
 
+  unchanged(): boolean {
+    const model = this.profileForm.value as User;
+    return model.username === this.user.username &&
+      model.firstName === this.user.firstName &&
+      model.middleName === this.user.middleName &&
+      model.lastName === this.user.lastName;
+  }
 }
 
