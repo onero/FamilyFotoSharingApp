@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../shared/auth.service';
 import {MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
-import {User} from '../shared/user.model';
+import {User} from '../../user/shared/user.model';
 import {matchPassword} from '../shared/password.validator';
 @Component({
   selector: 'app-signup',

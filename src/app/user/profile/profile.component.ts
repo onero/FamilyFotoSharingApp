@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../shared/auth.service';
+import {AuthService} from '../../auth/shared/auth.service';
+import {User} from '../shared/user.model';
+import {UserService} from '../shared/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,8 +12,9 @@ import {AuthService} from '../shared/auth.service';
 export class ProfileComponent implements OnInit {
 
   profileForm: FormGroup;
+  user: User;
 
-  constructor(private authService: AuthService,
+  constructor(private userService: UserService,
               private fb: FormBuilder) {
     this.profileForm = fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -22,9 +25,17 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.getUser()
+      .subscribe(user => this.user = user);
   }
 
-  save() {}
+  save() {
+    const updatedUserModel = this.profileForm.value as User;
+    updatedUserModel.uid = this.user.uid;
+    this.userService.updateUser(updatedUserModel)
+      .then(() => console.log('Saved'))
+      .catch(error => console.log(error));
+  }
 
   fcErr(fc: string, ec: string, pre?: string[]): boolean {
     if (pre && pre.length > 0) {

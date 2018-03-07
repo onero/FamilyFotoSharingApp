@@ -1,9 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="center">
+<div fxLayout="row" fxLayoutAlign="center" *ngIf="user">
   <mat-card  fxFlex="80">
     <mat-card-header>
       <img mat-card-avatar src="https://firebasestorage.googleapis.com/v0/b/familysharingapp-a850d.appspot.com/o/ljb.png?alt=media&token=9a40d621-fbde-40b2-847a-7bae12fb556f" alt="Photo of a Shiba Inu">
-      <mat-card-title>Username here</mat-card-title>
-      <mat-card-subtitle>Email here</mat-card-subtitle>
+      <mat-card-title>{{user.username}}</mat-card-title>
+      <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
       <form (ngSubmit)="save()" [formGroup]="profileForm" novalidate fxLayout="column">
