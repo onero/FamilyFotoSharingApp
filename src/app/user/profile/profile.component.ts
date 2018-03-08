@@ -38,6 +38,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
+  hovering(event) {
+
+  }
+
   save() {
     const updatedUserModel = this.profileForm.value as User;
     updatedUserModel.uid = this.user.uid;

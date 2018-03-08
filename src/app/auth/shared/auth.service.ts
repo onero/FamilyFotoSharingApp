@@ -36,6 +36,7 @@ export class AuthService {
   getAuthUser(): Observable<User> {
     return this.fireAuth.authState
       .map(authState => {
+        if (!authState) { return null; }
         return {
           uid: authState.uid,
           email: authState.email
