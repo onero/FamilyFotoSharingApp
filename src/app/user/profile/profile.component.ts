@@ -1,11 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../auth/shared/auth.service';
 import {User} from '../shared/user.model';
 import {UserService} from '../shared/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {type} from 'os';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
