@@ -8,6 +8,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {RouterModule} from '@angular/router';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {SharedModule} from '../shared/shared.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {SharedModule} from '../shared/shared.module';
     RouterModule,
     MatIconModule,
     AngularFirestoreModule,
-    SharedModule
+    SharedModule,
+    BrowserAnimationsModule
   ],
   declarations: [ProfileComponent],
   providers: [UserService]
