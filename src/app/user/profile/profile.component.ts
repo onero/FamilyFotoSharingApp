@@ -5,6 +5,8 @@ import {User} from '../shared/user.model';
 import {UserService} from '../shared/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {type} from 'os';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-profile',
@@ -27,9 +29,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   user: User;
   userSubscription: Subscription;
   isHovering: boolean;
+  img: string;
 
   constructor(private userService: UserService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private snack: MatSnackBar) {
     this.profileForm = fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       firstName: '',
@@ -52,6 +56,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   hovering(isHovering: boolean) {
     this.isHovering = isHovering;
+  }
+
+  changePic(event) {
+    if (event.toState === 'hoveringImage') {
+      this.img = '/assets/cloud_upload.svg';
+    } else {
+      this.img = 'https://firebasestorage.googleapis.com/v0/b/familysharingapp-a850d.appspot.com/o/ljb.png?alt=media&token=9a40d621-fbde-40b2-847a-7bae12fb556f';
+    }
+  }
+
+  uploadNewImage(fileList: FileList) {
+    if (fileList &&
+      fileList.length === 1 &&
+    ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
+      console.log(fileList.item(0));
+    } else {
+      this.snack.open('You need to drop a single png or jpeg image', null, {
+        duration: 4000
+      });
+    }
   }
 
   save() {
