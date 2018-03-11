@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FileService } from './file.service';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FileService} from './file.service';
+import {AngularFireStorageModule} from 'angularfire2/storage';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    AngularFireStorageModule
   ],
   declarations: [],
   providers: [FileService]

@@ -30,8 +30,7 @@ import { FileSystemModule } from './file-system/file-system.module';
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule,
-    UserModule,
-    FileSystemModule
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

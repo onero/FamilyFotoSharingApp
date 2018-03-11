@@ -46,6 +46,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userService.getUser()
       .subscribe(user => {
         this.user = user;
+        this.fileService.downloadUrlProfile(user.uid).subscribe(url => {
+          this.img = url;
+        });
         this.profileForm.patchValue(user);
       });
   }
@@ -71,7 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       fileList.length === 1 &&
       ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
       const file = fileList.item(0);
-      const path = `profile-images/${file.name}`;
+      const path = `profile-images/${this.user.uid}`;
       this.fileService.upload(path, file).downloadUrl.subscribe(url => {
         this.img = url;
       });
