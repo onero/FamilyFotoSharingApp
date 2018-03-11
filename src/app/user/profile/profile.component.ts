@@ -5,6 +5,7 @@ import {UserService} from '../shared/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatSnackBar} from '@angular/material';
+import {FileService} from '../../file-system/file.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +32,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
-              private snack: MatSnackBar) {
+              private snack: MatSnackBar,
+              private fileService: FileService) {
     this.profileForm = fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       firstName: '',
@@ -67,8 +69,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   uploadNewImage(fileList: FileList) {
     if (fileList &&
       fileList.length === 1 &&
-    ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
-      console.log(fileList.item(0));
+      ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
+      const file = fileList.item(0);
+      const path = `profile-images/${file.name}`;
+      this.fileService.upload(path, file).downloadUrl.subscribe(url => {
+        this.img = url;
+      });
     } else {
       this.snack.open('You need to drop a single png or jpeg image', null, {
         duration: 4000

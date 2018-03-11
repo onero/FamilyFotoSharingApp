@@ -12,6 +12,7 @@ import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { FileSystemModule } from './file-system/file-system.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserModule } from './user/user.module';
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule,
-    UserModule
+    UserModule,
+    FileSystemModule
   ],
   providers: [],
   bootstrap: [AppComponent]
