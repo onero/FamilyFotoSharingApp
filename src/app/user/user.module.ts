@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './shared/user.service';
 import {ProfileComponent} from './profile/profile.component';
 import {
-  MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSnackBarModule,
+  MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatProgressSpinnerModule, MatSnackBarModule,
   MatTooltipModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -30,7 +30,8 @@ import {FileSystemModule} from '../file-system/file-system.module';
     SharedModule,
     BrowserAnimationsModule,
     MatTooltipModule,
-    FileSystemModule
+    FileSystemModule,
+    MatProgressSpinnerModule
   ],
   declarations: [ProfileComponent],
   providers: [UserService]

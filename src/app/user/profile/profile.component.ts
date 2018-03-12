@@ -29,6 +29,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
   isHovering: boolean;
   img: string;
+  srcLoaded: boolean;
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
@@ -43,12 +44,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userSubscription = this.userService.getUser()
+    this.userSubscription = this.userService.getUserWithProfileUrl()
       .subscribe(user => {
         this.user = user;
-        this.fileService.downloadUrlProfile(user.uid).subscribe(url => {
-          this.img = url;
-        });
+        this.img = user.profileImgUrl;
         this.profileForm.patchValue(user);
       });
   }
@@ -61,27 +60,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.isHovering = isHovering;
   }
 
-  changePic(event) {
-    if (event.toState === 'hoveringImage') {
-      this.img = '/assets/cloud_upload.svg';
-    } else {
-      this.img = 'https://firebasestorage.googleapis.com/v0/b/familysharingapp-a850d.appspot.com/o/ljb.png?alt=media&token=9a40d621-fbde-40b2-847a-7bae12fb556f';
-    }
-  }
-
   uploadNewImage(fileList: FileList) {
     if (fileList &&
       fileList.length === 1 &&
       ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
+      this.srcLoaded = false;
       const file = fileList.item(0);
       const path = `profile-images/${this.user.uid}`;
       this.fileService.upload(path, file).downloadUrl.subscribe(url => {
         this.img = url;
+        this.hovering(false);
       });
     } else {
       this.snack.open('You need to drop a single png or jpeg image', null, {
         duration: 4000
       });
+      this.hovering(false);
     }
   }
 

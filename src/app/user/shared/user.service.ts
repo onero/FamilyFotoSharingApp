@@ -5,12 +5,14 @@ import {AuthService} from '../../auth/shared/auth.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 import 'rxjs/add/operator/first';
 import {EmptyObservable} from 'rxjs/observable/EmptyObservable';
+import {FileService} from '../../file-system/file.service';
 
 @Injectable()
 export class UserService {
 
   constructor(private authService: AuthService,
-              private afs: AngularFirestore) {
+              private afs: AngularFirestore,
+              private fileService: FileService) {
   }
 
   getUser(): Observable<User> {
@@ -38,6 +40,17 @@ export class UserService {
   updateUser(user: User): Promise<any> {
     return this.afs.doc('users/' + user.uid)
       .set(user);
+  }
+
+  getUserWithProfileUrl(): Observable<User> {
+    return this.getUser()
+      .switchMap(user => {
+        return this.fileService.downloadUrlProfile(user.uid)
+          .map(url => {
+            user.profileImgUrl = url;
+            return user;
+          });
+      });
   }
 
 }
