@@ -6,5 +6,6 @@ export class User {
   firstName?: string;
   middleName?: string;
   lastName?: string;
+  img?: boolean;
   profileImgUrl?: string;
 }

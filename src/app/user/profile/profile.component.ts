@@ -47,7 +47,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription = this.userService.getUserWithProfileUrl()
       .subscribe(user => {
         this.user = user;
-        this.img = user.profileImgUrl;
+        if (this.user.img) {
+          this.img = user.profileImgUrl;
+        } else {
+          this.img = 'assets/unknownProfile.png';
+        }
         this.profileForm.patchValue(user);
       });
   }
@@ -69,6 +73,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const path = `profile-images/${this.user.uid}`;
       this.fileService.upload(path, file).downloadUrl.subscribe(url => {
         this.img = url;
+        this.user.img = true;
+        this.save();
         this.hovering(false);
       });
     } else {
@@ -82,9 +88,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   save() {
     const updatedUserModel = this.profileForm.value as User;
     updatedUserModel.uid = this.user.uid;
+    updatedUserModel.img = this.user.img;
     this.userService.updateUser(updatedUserModel)
-      .then(() => console.log('Saved'))
-      .catch(error => console.log(error));
+      .then(() => {
+        this.snack.open('User Saved', null, {
+          duration: 4000,
+          verticalPosition: 'top',
+          panelClass: ['snack-color-success']
+        });
+      })
+      .catch(error => {
+        this.snack.open(error, null, {
+          duration: 4000,
+          panelClass: ['snack-color-failure']
+        });
+      });
   }
 
   fcErr(fc: string, ec: string, pre?: string[]): boolean {
