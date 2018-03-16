@@ -5,7 +5,7 @@ import {UserService} from '../shared/user.service';
 import {Subscription} from 'rxjs/Subscription';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MatSnackBar} from '@angular/material';
-import {FileService} from '../../file-system/file.service';
+import {FileService} from '../../shared/files/file.service';
 
 @Component({
   selector: 'app-profile',
