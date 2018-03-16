@@ -1,0 +1,23 @@
+<div fxLayout="row" fxLayoutAlign="center">
+  <mat-card fxFlex="80" *ngIf="file">
+    <mat-card-header>
+      <mat-card-title>{{file.displayName}}</mat-card-title>
+      <mat-card-subtitle>IMG.jpg</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <mat-list dense>
+        <mat-list-item>Created: {{file.created}}</mat-list-item>
+        <mat-list-item>FileName: {{file.fileName}}</mat-list-item>
+        <mat-list-item>Size: {{file.size / 1000}} MB</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="warn">
+        <mat-icon>delete</mat-icon> Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngIf="!file">Loading...</div>
+</div>
