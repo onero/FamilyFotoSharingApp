@@ -1,1 +1,5 @@
-<app-file-system-container></app-file-system-container>
+<app-file-system-container
+  [columns]="columns"
+  (clickedFolder)="folderClicked($event)"
+  (clickedFile)="fileClicked($event)"
+></app-file-system-container>

@@ -1,7 +1,6 @@
 ::ng-deep snack-bar-container.snack-color-success {
   background: darkgreen;
 }
-
 ::ng-deep snack-bar-container.snack-color-failure {
-  background: red;
+  background: darkred;
 }

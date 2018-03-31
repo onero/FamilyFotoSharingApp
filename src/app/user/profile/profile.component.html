@@ -1,18 +1,22 @@
 <div fxLayout="row" fxLayoutAlign="center" *ngIf="user">
-  <mat-card fxFlex="80">
+  <mat-card  fxFlex="80">
     <mat-card-header>
-      <img [hidden]="!srcLoaded"
-           matTooltipPosition="below"
-           matTooltip="Drop new image here or click me to select!"
-           [@imageHover]="isHovering ? 'hoveringImage' : 'notHoveringImage'"
-           (dropped)="uploadNewImage($event)"
-           appUpload
-           (hovering)="hovering($event)"
-           (load)="srcLoaded = true"
-           mat-card-avatar
-           [src]="isHovering ? '/assets/cloud_upload.svg' : img"
-           alt="Profile Photo">
-      <mat-spinner mat-card-avatar [diameter]="40" *ngIf="!srcLoaded"></mat-spinner>
+      <img
+        [hidden]="!srcLoaded"
+        matTooltipPosition = "below"
+        matTooltip="Drop new image here or click me to select"
+        [@imageHover]="isHovering ? 'hoveringImage' : 'notHoveringImage'"
+        fpaUpload
+        (hovering)="hovering($event)"
+        (dropped)="uploadNewImage($event)"
+        mat-card-avatar
+        [src]="isHovering ? '/assets/ic_cloud_upload_black_48px.svg' : img"
+        alt="Photo of a Shiba Inu"
+        (load)="srcLoaded = true">
+      <mat-spinner
+        mat-card-avatar
+        diameter="40"
+        *ngIf="!srcLoaded"></mat-spinner>
       <mat-card-title>{{user.username}}</mat-card-title>
       <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
     </mat-card-header>

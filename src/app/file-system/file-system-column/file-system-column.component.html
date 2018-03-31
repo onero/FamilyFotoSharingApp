@@ -1,0 +1,16 @@
+<div fxLayout="column" fxFill>
+  <div fxFill>
+    <app-folder-details
+      (clickedFolder)="clickedFolder.emit($event)"
+      (clickedFile)="clickedFile.emit($event)"
+      [folders]="folderColumn.main.subFolders"
+      *ngIf="folderColumn"
+      [files]="folderColumn.main.files"
+      [displayName]="folderColumn.displayName"></app-folder-details>
+    <app-file-details
+      [file]="fileColumn.file"
+      [url]="fileColumn.url"
+      *ngIf="fileColumn"></app-file-details>
+  </div>
+
+</div>

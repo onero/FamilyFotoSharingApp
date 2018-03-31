@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../shared/user.service';
+import { Subscription } from 'rxjs/Subscription';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { MatSnackBar } from '@angular/material';
+import { FileStorageService } from '../../shared/storage/file-storage.service';
 import {User} from '../shared/user.model';
-import {UserService} from '../shared/user.service';
-import {Subscription} from 'rxjs/Subscription';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-import {MatSnackBar} from '@angular/material';
-import {FileService} from '../../shared/files/file.service';
 
 @Component({
   selector: 'app-profile',
@@ -18,25 +18,23 @@ import {FileService} from '../../shared/files/file.service';
     state('notHoveringImage', style({
       opacity: 1
     })),
-    transition('hoveringImage <=> notHoveringImage',
-      animate('200ms ease-in'))
+    transition('hoveringImage <=> notHoveringImage', animate('400ms ease-in'))
   ])]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-
   profileForm: FormGroup;
   user: User;
-  userSubscription: Subscription;
+  userSub: Subscription;
   isHovering: boolean;
   img: string;
   srcLoaded: boolean;
 
   constructor(private userService: UserService,
+              private fileStorageService: FileStorageService,
               private fb: FormBuilder,
-              private snack: MatSnackBar,
-              private fileService: FileService) {
+              private snack: MatSnackBar) {
     this.profileForm = fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+      username: ['', [Validators.required, Validators.minLength(4)]],
       firstName: '',
       middleName: '',
       lastName: ''
@@ -44,39 +42,40 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.userSubscription = this.userService.getUserWithProfileUrl()
+    this.userSub = this.userService.getUserWithProfileUrl()
       .subscribe(user => {
         this.user = user;
         if (this.user.img) {
           this.img = user.profileImgUrl;
         } else {
-          this.img = 'assets/unknownProfile.png';
+          this.img = '/assets/ic_tag_faces_black_48px.svg';
         }
         this.profileForm.patchValue(user);
       });
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.userSub.unsubscribe();
   }
 
   hovering(isHovering: boolean) {
     this.isHovering = isHovering;
   }
 
-  uploadNewImage(fileList: FileList) {
-    if (fileList &&
-      fileList.length === 1 &&
+  uploadNewImage(fileList) {
+    if (fileList && fileList.length === 1 &&
       ['image/jpeg', 'image/png'].indexOf(fileList.item(0).type) > -1) {
       this.srcLoaded = false;
       const file = fileList.item(0);
-      const path = `profile-images/${this.user.uid}`;
-      this.fileService.upload(path, file).downloadUrl.subscribe(url => {
-        this.img = url;
-        this.user.img = true;
-        this.save();
-        this.hovering(false);
-      });
+      const path = 'profile-images/' + this.user.uid;
+      this.fileStorageService.upload(path, file).downloadUrl.subscribe(
+        url => {
+          this.img = url;
+          this.user.img = true;
+          this.save();
+          this.hovering(false);
+        }
+      );
     } else {
       this.snack.open('You need to drop a single png or jpeg image', null, {
         duration: 4000
@@ -86,23 +85,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    const updatedUserModel = this.profileForm.value as User;
-    updatedUserModel.uid = this.user.uid;
-    updatedUserModel.img = this.user.img;
-    this.userService.updateUser(updatedUserModel)
+    const model = this.profileForm.value as User;
+    model.uid = this.user.uid;
+    model.img = this.user.img;
+    this.userService.update(model)
       .then(() => {
         this.snack.open('User Saved', null, {
-          duration: 4000,
+          duration: 2000,
           verticalPosition: 'top',
           panelClass: ['snack-color-success']
         });
       })
-      .catch(error => {
-        this.snack.open(error, null, {
+      .catch(err => {
+        this.snack.open('Something went, try again later', null, {
           duration: 4000,
+          verticalPosition: 'top',
           panelClass: ['snack-color-failure']
         });
       });
+  }
+
+  unchanged(): boolean {
+    const model = this.profileForm.value as User;
+    return model.username === this.user.username &&
+      model.firstName === this.user.firstName &&
+      model.middleName === this.user.middleName &&
+      model.lastName === this.user.lastName;
   }
 
   fcErr(fc: string, ec: string, pre?: string[]): boolean {
@@ -116,12 +124,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return this.profileForm.get(fc).hasError(ec);
   }
 
-  unchanged(): boolean {
-    const model = this.profileForm.value as User;
-    return model.username === this.user.username &&
-      model.firstName === this.user.firstName &&
-      model.middleName === this.user.middleName &&
-      model.lastName === this.user.lastName;
-  }
 }
-

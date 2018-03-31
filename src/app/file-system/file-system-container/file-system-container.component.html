@@ -1,1 +1,7 @@
-<app-file-details ></app-file-details>
+<div fxLayout="row">
+  <app-file-system-column [column]="column"
+                          (clickedFolder)="clickedFolder.emit($event)"
+                          (clickedFile)="clickedFile.emit($event)"
+                          *ngFor="let column of this.columns">
+  </app-file-system-column>
+</div>

@@ -1,8 +1,9 @@
-export class File {
+export interface File {
+  uid: string;
   created: string;
   fileName: string;
   mimeType: string;
-  owner?: string;
-  displayName: string;
   size: number;
+  displayName: string;
+  owner?: string;
 }
