@@ -22,6 +22,7 @@ export class AlbumsListComponent implements OnInit {
               private fileService: FileService) { }
 
   ngOnInit() {
+    // Initialize user with root folder
     this.userService.getUser().switchMap(user => {
         return this.folderService.getFolder(user.rootFolder);
       }
