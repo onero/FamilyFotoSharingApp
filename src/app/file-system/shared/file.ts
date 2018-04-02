@@ -5,5 +5,5 @@ export interface File {
   mimeType: string;
   size: number;
   displayName: string;
-  owner?: string;f
+  owner?: string;
 }
