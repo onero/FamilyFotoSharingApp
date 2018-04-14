@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FileDetailsComponent } from './file-details/file-details.component';
 import { FileSystemContainerComponent } from './file-system-container/file-system-container.component';
 import {
-  MatButtonModule, MatCardModule, MatIconModule, MatListModule, MatProgressSpinnerModule
+  MatButtonModule, MatCardModule, MatDividerModule, MatIconModule, MatListModule, MatProgressSpinnerModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FolderDetailsComponent } from './folder-details/folder-details.component';
@@ -17,7 +17,8 @@ import { FileSystemColumnComponent } from './file-system-column/file-system-colu
     MatListModule,
     MatButtonModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule
   ],
   declarations: [FileDetailsComponent, FileSystemContainerComponent, FolderDetailsComponent, FileSystemColumnComponent],
   providers: [],

@@ -1,11 +1,27 @@
 <mat-card fxLayout="column" fxFill>
-  <mat-card-header>
-    <mat-card-title>{{displayName}}</mat-card-title>
+  <mat-card-header fxLayout="column">
+    <div fxLayout="row" fxFlex="100" >
+      <span fxLayout="column" fxLayoutAlign="center" fxFlex="100" style="font-size: 14px">{{displayName}}</span>
+      <span fxLayout="row"  fxLayoutAlign="end">
+        <button mat-icon-button (click)="deleteFolder.emit(main)">
+          <mat-icon color="warn">delete</mat-icon>
+        </button>
+        <button mat-icon-button (click)="addFolder.emit(main)">
+          <mat-icon>create_new_folder</mat-icon>
+        </button>
+        <button mat-icon-button (click)="uploadFileToFolder.emit(main)">
+          <mat-icon color="primary">file_upload</mat-icon>
+        </button>
+      </span>
+    </div>
+    <div fxLayout="row">
+      <mat-divider fxFlex="100"></mat-divider>
+    </div>
   </mat-card-header>
   <mat-card-content>
     <mat-nav-list>
       <div *ngIf="folders">
-        <h3 mat-subheader>Folders</h3>
+        <h5 mat-subheader>Folders</h5>
         <mat-list-item *ngFor="let folder of folders"
                        (click)="clickedFolder.emit(folder)">
           <mat-icon mat-list-icon
@@ -15,7 +31,7 @@
       </div>
 
       <div *ngIf="files">
-        <h3 mat-subheader>Files</h3>
+        <h5 mat-subheader>Files</h5>
         <mat-list-item *ngFor="let file of files"
                        (click)="clickedFile.emit(file)">
           <mat-icon mat-list-icon

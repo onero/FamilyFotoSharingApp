@@ -15,6 +15,12 @@ export class FileSystemContainerComponent implements OnInit {
   @Output()
   clickedFolder = new EventEmitter<Folder>();
   @Output()
+  deleteFolder = new EventEmitter<Folder>();
+  @Output()
+  uploadFileToFolder = new EventEmitter<Folder>();
+  @Output()
+  addFolder = new EventEmitter<Folder>();
+  @Output()
   clickedFile = new EventEmitter<File>();
   constructor() {}
 

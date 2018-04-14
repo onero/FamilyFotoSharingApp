@@ -1,5 +1,9 @@
 <div fxLayout="row">
   <app-file-system-column [column]="column"
+                          (addFolder)="addFolder.emit($event)"
+                          (uploadFileToFolder)="uploadFileToFolder.emit($event)"
+                          (deleteFolder)="deleteFolder.emit($event)"
+                          (deleteFolder)="deleteFolder.emit($event)"
                           (clickedFolder)="clickedFolder.emit($event)"
                           (clickedFile)="clickedFile.emit($event)"
                           *ngFor="let column of this.columns">

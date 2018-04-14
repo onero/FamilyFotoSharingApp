@@ -10,17 +10,26 @@ import { File } from '../shared/file';
 export class FolderDetailsComponent implements OnInit {
 
   @Input()
-  folders: Folder[];
-  @Input()
-  files: File[];
+  main: Folder;
   @Input()
   displayName: string;
   @Output()
   clickedFolder = new EventEmitter<Folder>();
   @Output()
+  deleteFolder = new EventEmitter<Folder>();
+  @Output()
+  addFolder = new EventEmitter<Folder>();
+  @Output()
+  uploadFileToFolder = new EventEmitter<Folder>();
+  @Output()
   clickedFile = new EventEmitter<File>();
+  folders: Folder[];
+  files: File[];
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.folders = this.main.subFolders;
+    this.files = this.main.files;
+  }
 
 }

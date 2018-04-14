@@ -3,9 +3,11 @@
     <app-folder-details
       (clickedFolder)="clickedFolder.emit($event)"
       (clickedFile)="clickedFile.emit($event)"
-      [folders]="folderColumn.main.subFolders"
+      (addFolder)="addFolder.emit($event)"
+      (uploadFileToFolder)="uploadFileToFolder.emit($event)"
+      (deleteFolder)="deleteFolder.emit($event)"
+      [main]="folderColumn.main"
       *ngIf="folderColumn"
-      [files]="folderColumn.main.files"
       [displayName]="folderColumn.displayName"></app-folder-details>
     <app-file-details
       [file]="fileColumn.file"

@@ -2,4 +2,7 @@
   [columns]="columns"
   (clickedFolder)="folderClicked($event)"
   (clickedFile)="fileClicked($event)"
+  (deleteFolder)="folderDeleted($event)"
+  (addFolder)="addFolderToFolder($event)"
+  (uploadFileToFolder)="uploadFileToFolder($event)"
 ></app-file-system-container>

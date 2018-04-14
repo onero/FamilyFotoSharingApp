@@ -1,6 +1,12 @@
 import {Column} from './column';
 import {Folder} from './folder';
 
-export interface FolderColumn extends Column {
+export class FolderColumn implements Column {
   main: Folder;
+  displayName: string;
+
+  constructor(main: Folder) {
+    this.displayName = main.name;
+    this.main = main;
+  }
 }
