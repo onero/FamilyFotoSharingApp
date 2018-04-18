@@ -3,7 +3,7 @@
 const functions = require('firebase-functions');
 const mkdirp = require('mkdirp-promise');
 // Include a Service Account Key to use a Signed URL
-const gcs = require('@google-cloud/storage')({keyFilename: './src/service-account-credentials.json'});
+const gcs = require('@google-cloud/storage')();
 const admin = require('firebase-admin');
 admin.initializeApp();
 const spawn = require('child-process-promise').spawn;
@@ -20,8 +20,6 @@ const THUMB_PREFIX = 'thumb_';
 /**
  * When an image is uploaded in the Storage bucket We generate a thumbnail automatically using
  * ImageMagick.
- * After the thumbnail has been generated and uploaded to Cloud Storage,
- * we write the public URL to the Firebase Realtime Database.
  */
 exports.generateThumbnail = functions.storage.object().onFinalize((object) => {
   // File and directory paths.
@@ -82,13 +80,14 @@ exports.generateThumbnail = functions.storage.object().onFinalize((object) => {
       thumbFile.getSignedUrl(config),
       file.getSignedUrl(config),
     ]);
-  }).then((results) => {
-    console.log('Got Signed URLs.');
-    const thumbResult = results[0];
-    const originalResult = results[1];
-    const thumbFileUrl = thumbResult[0];
-    const fileUrl = originalResult[0];
-    // Add the URLs to the Database
-    return admin.database().ref('images').push({path: fileUrl, thumbnail: thumbFileUrl});
-  }).then(() => console.log('Thumbnail URLs saved to database.'));
+  })
+  //   .then((results) => {
+  //   console.log('Got Signed URLs.');
+  //   const thumbResult = results[0];
+  //   const originalResult = results[1];
+  //   const thumbFileUrl = thumbResult[0];
+  //   const fileUrl = originalResult[0];
+  //   // Add the URLs to the Database
+  //   return admin.database().ref('images').push({path: fileUrl, thumbnail: thumbFileUrl});
+  // }).then(() => console.log('Thumbnail URLs saved to database.'));
 });
